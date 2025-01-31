@@ -28,7 +28,7 @@ Several other techniques have subsequently enriched the Deep Q-Network, specific
 
 In `Navigation.ipynb`, there is the possibility to train an agent, setting the use of Double DQN and Dueling DQN, and a Prioritized Experience Replay agent to, again setting the use of Double DQN and Dueling DQN. This distinction is due to the fact that Prioritized Experience Replay agent has some additional hyperparameters and behaviours, so that I decided to manage it separately.
 
-As already specified in `README.md`, `checkpoint.pth` contains the saved model weights of a successful agent and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reaches the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
+As already specified in `README.md`, `checkpoint.pth` contains the saved model weights of a successful agent and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reached the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
 
 A possible future idea to improve agent performance is to combine all the extention (not only the three I considered) to the naive DQN to create the so called Rainbow Agent.
 

@@ -21,4 +21,4 @@ The task is episodic, and in order to solve the environment, the agent must get 
 
 3. Follow the instructions in `Navigation.ipynb` and install the dependencies in `requirements.txt`
 
-4. `checkpoint.pth` contains the saved model weights of a successful agent and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reaches the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
+4. `checkpoint.pth` contains the saved model weights of a successful agent and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reached the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
