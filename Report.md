@@ -32,6 +32,8 @@ As already specified in `README.md`, `checkpoint.pth` contains the saved model w
 
 A possible future idea to improve agent performance is to combine all the extention (not only the three I considered) to the naive DQN to create the so called Rainbow Agent.
 
+`Navigation_Pixels.ipynb` allows to train an Agent starting from raw pixels with shape `(1, 84, 84, 3)`.  This code differs from `Navigation.ipynb`, where we are grabbing **`visual_observations`** (the raw pixels) instead of **`vector_observations`**. To directly manage the raw pixels, it is necessary to use a model that first process them due to convolutional layers. In `model.py`,  `FromPixelsQNetwork`, `FromPixelsDuelingQNetwork` consent to process screen images adding, before the fully connected layers, convolution layers
+
 
 
 

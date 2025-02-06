@@ -2,7 +2,7 @@ import numpy as np
 import random
 from collections import namedtuple, deque
 
-from model import QNetwork, DuelingQNetwork
+from model import QNetwork, DuelingQNetwork, FromPixelsQNetwork, FromPixelsDuelingQNetwork
 
 import torch
 import torch.nn.functional as F
@@ -23,7 +23,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 class Agent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, seed, double_dqn, dueling_dqn):
+    def __init__(self, state_size, action_size, seed, double_dqn, dueling_dqn, from_pixels):
         """Initialize an Agent object.
         
         Params
@@ -38,14 +38,23 @@ class Agent():
         self.seed = random.seed(seed)
         self.double_dqn = double_dqn
         self.dueling_dqn = dueling_dqn
+        self.from_pixels = from_pixels
 
         # Q-Network
-        if not self.dueling_dqn:
-            self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
-            self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
+        if not self.from_pixels:
+            if not self.dueling_dqn:
+                self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
+                self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
+            else:
+                self.qnetwork_local = DuelingQNetwork(state_size, action_size, seed).to(device)
+                self.qnetwork_target = DuelingQNetwork(state_size, action_size, seed).to(device)
         else:
-            self.qnetwork_local = DuelingQNetwork(state_size, action_size, seed).to(device)
-            self.qnetwork_target = DuelingQNetwork(state_size, action_size, seed).to(device)
+            if not self.dueling_dqn:
+                self.qnetwork_local = FromPixelsQNetwork(action_size, seed).to(device)
+                self.qnetwork_target = FromPixelsQNetwork(action_size, seed).to(device)
+            else:
+                self.qnetwork_local = FromPixelsDuelingQNetwork(action_size, seed).to(device)
+                self.qnetwork_target = FromPixelsDuelingQNetwork(action_size, seed).to(device)
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR) # optimizer is applied to the qnetwork_local parameters, since they are updated at each learning step!
 
         self.memory = ReplayBuffer(action_size, BUFFER_SIZE, BATCH_SIZE, seed)
@@ -171,7 +180,7 @@ class Agent():
 class PrioritizedExperienceReplayAgent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, seed, double_dqn, e, dueling_dqn):
+    def __init__(self, state_size, action_size, seed, double_dqn, e, dueling_dqn, from_pixels):
         """Initialize an Agent object.
         
         Params
@@ -188,14 +197,24 @@ class PrioritizedExperienceReplayAgent():
         self.double_dqn = double_dqn
         self.e = e
         self.dueling_dqn = dueling_dqn
-        
+        self.from_pixels = from_pixels
+
         # Q-Network
-        if not self.dueling_dqn:
-            self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
-            self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
+        if not from_pixels:
+            if not self.dueling_dqn:
+                self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
+                self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
+            else:
+                self.qnetwork_local = DuelingQNetwork(state_size, action_size, seed).to(device)
+                self.qnetwork_target = DuelingQNetwork(state_size, action_size, seed).to(device)
         else:
-            self.qnetwork_local = DuelingQNetwork(state_size, action_size, seed).to(device)
-            self.qnetwork_target = DuelingQNetwork(state_size, action_size, seed).to(device)
+            if not self.dueling_dqn:
+                self.qnetwork_local = FromPixelsQNetwork(action_size, seed).to(device)
+                self.qnetwork_target = FromPixelsQNetwork(action_size, seed).to(device)
+            else:
+                self.qnetwork_local = FromPixelsDuelingQNetwork(action_size, seed).to(device)
+                self.qnetwork_target = FromPixelsDuelingQNetwork(action_size, seed).to(device)
+        
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR) # optimizer is applied to the qnetwork_local parameters, since they are updated at each learning step!
 
         self.memory = PrioritizedReplayBuffer(action_size, BUFFER_SIZE, BATCH_SIZE, A, seed)
