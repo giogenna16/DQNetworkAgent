@@ -21,6 +21,6 @@ The task is episodic, and in order to solve the environment, the agent must get 
 
 3. Follow the instructions in `Navigation.ipynb` and install the dependencies in `requirements.txt`
 
-4. `checkpoint.pth` contains the saved model weights of a successful agent and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reached the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
+4. `checkpoint.pth` contains the saved model weights of a successful agent (in `Navigation.ipynb`, the last section is dedicated to see how this agent works) and `score_episode_plot.pth` shows the trend of the average score over episodes during the training phase of the same agent until the goal is reached (average score of +13 over 100 consecutive episodes). Specifically, this agent reached the gol in 425 episodes and it is based on naive DQN, with the additional use of DuelingDQN and DoubleDQN techniques.
 
 5. `Navigation_Pixels.ipynb` allows to train an Agent starting from raw pixels with shape `(1, 84, 84, 3)`.  This code differs from `Navigation.ipynb`, where we are grabbing **`visual_observations`** (the raw pixels) instead of **`vector_observations`**. To directly manage the raw pixels, it is necessary to use a model that first process them due to convolutional layers.
